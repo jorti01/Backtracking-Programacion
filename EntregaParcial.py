@@ -31,12 +31,10 @@ laberinto.append([1,0,0,0,0,0,1,1,1,0,1,0,1,1,0,1,])
 laberinto.append([1,1,1,0,1,0,1,0,1,0,1,0,1,0,0,1,])
 laberinto.append([1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,2,])
 laberinto.append([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,])
-p = list(laberinto)
-print(p)
 
-
+pantalla = turtle.Screen()
 dibujaLaberinto = turtle.Turtle() ## Tortuga usada para cualquier funcion que tenga relación con el dibujo del laberinto base.
-
+rT = turtle.Turtle() ## Tortuga usada para resolver los laberintos.
 
 ## Para dibujar el laberinto se requiere de una función que dibuje cajas por cada obstaculo representado por 1 en Binario
 
@@ -56,6 +54,7 @@ def caja(tortuga,tamaño):
 ## sublista, por lo tanto va a cambiar de color basado en el 0 o 1 que se encuentre en la posición y asi se dibuja una caja blanca(no obstaculo) o una caja negra
 
 def dibujarLaberinto(tortuga,laberinto,tamaño):
+    p = list(laberinto)
     tortuga.setposition(0,0)
     for i in range(0, len(p)):
         for j in range(0, len(p[i])):
@@ -68,6 +67,25 @@ def dibujarLaberinto(tortuga,laberinto,tamaño):
         tortuga.penup()
         tortuga.setposition(0,tortuga.ycor()-tamaño)
         tortuga.pendown()
-dibujaLaberinto.speed(10)
-dibujarLaberinto(dibujaLaberinto,p,30)
+    tortuga.hideturtle()
+    
+
+        
+        
+def resolverLaberinto(laberinto,tamaño):
+    p = list(laberinto)
+    r = p[0]
+    rT.penup()
+    if 0 in r:
+        m = r.index(0)
+    rT.setposition(m*tamaño+tamaño/2,0)
+    rT.right(90)
+    rT.pendown()
+
+    
+
+pantalla.tracer(0)
+dibujarLaberinto(dibujaLaberinto,laberinto,30)
+resolverLaberinto(laberinto,30)
+pantalla.update()
     
