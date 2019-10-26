@@ -100,6 +100,5 @@ def resolverLaberinto(laberinto,tamaño):
 
 pantalla.tracer(0)
 dibujarLaberinto(dibujaLaberinto,maze,30)
-resolverLaberinto(maze,30)
 pantalla.update()
 pantalla.exitonclick()  
