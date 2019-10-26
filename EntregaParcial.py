@@ -1,38 +1,36 @@
+# -*- coding: utf-8 -*-
+"""
+@author: Nicolas Rogers, Diego Herrera y Juan Ortiz
+"""
 
 import turtle
-import cv2
-import numpy as np
+from PIL import Image
+
+BLOCK_SIZE = 19
+
+im = Image.open('maze.jpg')
+pixels = im.load()
+width, height = im.size
+offset = int(BLOCK_SIZE / 2)
 
 
+maze = [
+  [
+    int(pixels[x + offset, y + offset][0] < 125)
+    for x in range(0, height, BLOCK_SIZE)
+  ]
+  for y in range(0, width, BLOCK_SIZE)
+]
 
 
-
-
-img = cv2.imread("D:/maze.jpg",0)
-ret, binaryImage = cv2.threshold(img, 10, 255, cv2.THRESH_BINARY)
-print(binaryImage)
+maze[20][15] = 0 
+maze[19][20] = 1
 
 colores = ["white","black"]
 
 
-laberinto=[[1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,]]
-laberinto.append([1,0,1,1,0,0,0,0,0,1,0,0,0,1,0,1,])
-laberinto.append([1,0,0,1,0,1,1,1,0,0,0,1,0,1,0,1,])
-laberinto.append([1,1,0,1,0,0,0,1,1,0,1,0,0,1,0,1,])
-laberinto.append([1,0,0,0,0,1,0,1,0,0,1,0,1,0,0,1,])
-laberinto.append([1,0,1,0,1,0,0,1,1,1,1,1,0,1,0,1,])
-laberinto.append([1,0,1,1,1,0,1,1,0,0,0,0,0,0,0,1,])
-laberinto.append([1,0,0,0,1,1,1,0,0,1,0,1,0,1,1,1,])
-laberinto.append([1,0,1,0,1,0,0,0,1,1,0,1,0,1,0,1,])
-laberinto.append([1,0,1,0,1,0,1,1,0,0,1,0,0,0,0,1,])
-laberinto.append([1,0,1,0,1,0,0,0,1,0,1,1,0,1,1,1,])
-laberinto.append([1,0,1,1,1,1,1,0,0,0,1,0,0,0,0,1,])
-laberinto.append([1,0,0,0,0,0,1,1,1,0,1,0,1,1,0,1,])
-laberinto.append([1,1,1,0,1,0,1,0,1,0,1,0,1,0,0,1,])
-laberinto.append([1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,2,])
-laberinto.append([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,])
-
 pantalla = turtle.Screen()
+turtle.setup(1920,1080)
 dibujaLaberinto = turtle.Turtle() ## Tortuga usada para cualquier funcion que tenga relación con el dibujo del laberinto base.
 rT = turtle.Turtle() ## Tortuga usada para resolver los laberintos.
 
@@ -55,7 +53,7 @@ def caja(tortuga,tamaño):
 
 def dibujarLaberinto(tortuga,laberinto,tamaño):
     p = list(laberinto)
-    tortuga.setposition(0,0)
+    tortuga.setposition(-300,300)
     for i in range(0, len(p)):
         for j in range(0, len(p[i])):
             if p[i][j] == 0:
@@ -65,7 +63,7 @@ def dibujarLaberinto(tortuga,laberinto,tamaño):
                 tortuga.color(colores[1])
                 caja(tortuga,tamaño)
         tortuga.penup()
-        tortuga.setposition(0,tortuga.ycor()-tamaño)
+        tortuga.setposition(-300,tortuga.ycor()-tamaño)
         tortuga.pendown()
     tortuga.hideturtle()
     
@@ -75,17 +73,33 @@ def dibujarLaberinto(tortuga,laberinto,tamaño):
 def resolverLaberinto(laberinto,tamaño):
     p = list(laberinto)
     r = p[0]
+    l = p[len(p)-1]
     rT.penup()
     if 0 in r:
         m = r.index(0)
-    rT.setposition(m*tamaño+tamaño/2,0)
+    else:
+        if 0 in p[1]:
+            m = r.index(0)
+    rT.setposition(-300+m*tamaño+tamaño/2,300)
     rT.right(90)
     rT.pendown()
-
-    
+    if 0 in l:
+        xFinal = l.index(0)
+    yFinal = len(p)
+    while (rT.xcor()+300)/tamaño != xFinal  and ((rT.ycor()+300)/tamaño) != yFinal  :
+        x = int((rT.xcor()+300)/tamaño)
+        y = int((rT.ycor()-300)/tamaño)
+        if p[y+1][x] == 0: ## Espacio abajo vacio.
+            rT.setheading(0)
+            rT.right(90)
+            rT.forward(tamaño)
+        if p[y][x+1] == 0: ## Espacio derecha vacio
+            rT.setheading(0)
+            rT.forward(tamaño)
+            
 
 pantalla.tracer(0)
-dibujarLaberinto(dibujaLaberinto,laberinto,30)
-resolverLaberinto(laberinto,30)
+dibujarLaberinto(dibujaLaberinto,maze,30)
+resolverLaberinto(maze,30)
 pantalla.update()
-    
+pantalla.exitonclick()  
