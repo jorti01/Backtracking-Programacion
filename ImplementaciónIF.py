@@ -14,6 +14,7 @@ Created on Mon Oct 28 11:11:05 2019
 
 import turtle
 from PIL import Image
+import random
 
 BLOCK_SIZE = 19
 
@@ -67,6 +68,10 @@ def dibujarLaberinto(tortuga,laberinto,tamaño):
         for j in range(0, len(p[i])):
             if p[i][j] == 0:
                 tortuga.color(colores[0])
+#        elif p[abs(y)][x-1] == 0:
+#            rT.setheading(0)
+#            rT.left(90)
+#            rT.forward(tamaño)
                 caja(tortuga,tamaño)
             else:
                 tortuga.color(colores[1])
@@ -105,17 +110,27 @@ def resolverLaberinto(laberinto,tamaño):
             rT.setheading(0)
             rT.right(90)
             rT.forward(tamaño)
-        elif p[abs(y)][x+1] == 0:
+        elif p[abs(y)][x+1] == 0: ## Espacio de la derecha vacio
             rT.setheading(0)
             rT.forward(tamaño)
-#        elif p[abs(y)][x-1] == 0:
+        elif p[abs(y)][x+1] == 0 and p[abs(y)][x-1] == 0:
+            NumAleatorio = random.randint(0,1)
+            if NumAleatorio == 0:
+                rT.setheading(0)
+                rT.forward(tamaño)
+            else:
+                rT.setheading(0)
+                rT.left(90)
+                rT.forward(tamaño)
+#        elif not p[abs(y)][x-1] == 1:
 #            rT.setheading(0)
 #            rT.left(90)
 #            rT.forward(tamaño)
         else:
             break
-        print(x)
         print(y)
+        print(x)
+
 
 
 
