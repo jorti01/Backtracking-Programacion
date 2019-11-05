@@ -111,8 +111,11 @@ SolucionBinaria(maze,0,9) ## Por medio de recursión y los distintos casos encue
 coordsx.reverse()
 coordsy.reverse()
 ## Definir la posición de la tortuga solución en la casilla que tenga 0 en la primera columna del laberinto
-rT.setposition(-30,320)
+rT.penup()
+rT.setposition(coordsy[0],coordsx[0])
+rT.pendown()
 rT.color("red")
+rT.pensize(5)
 for a in range(0,len(coordsx)): ## Para las coordenadas dentro de solucionX y solucionY, poner la posición de la tortuga siguiendo el camino entrada/salida
     rT.setposition(coordsy[a],coordsx[a])
 
