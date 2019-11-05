@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author: Nicolas Rogers, Diego Herrera y Juan Ortiz
+@author: Nicolas Rogers, Diego Herrera y Juan Ortiz ## Analisis de Imagen: bug 
 """
 
 import turtle
@@ -72,51 +72,49 @@ def dibujarLaberinto(tortuga,laberinto,tamaño):
     
 
             
-coordsx = []
-coordsy = []          
+coordsx = [] ## Lista para coordenadas de x, solución
+coordsy = [] ## Lista para coordenadas de y, solución       
 
 def SolucionBinaria(laberinto,x, y):
-
-    if laberinto[x][y] == 2:
+    ## Tres posibles casos en terminos binarios.
+    if laberinto[x][y] == 2: ## Si se encuentra una celda con el numero 2, esta es la salida. Retornar true.
         print("Solucion encontrada")
         return True
-    elif laberinto[x][y] == 1:
+    elif laberinto[x][y] == 1: ## Si se encuentra una celda con el numero 1, esta es una pared. Retornar false.
         print("Pared encontrada",(x,y))
         return False
-    elif laberinto[x][y] == 3:
+    elif laberinto[x][y] == 3:  ## Si se encuentra una celda con el numero 3, esta celda ya fue visitada. Retornar false.
         print("Celda ya visitada",(x,y))
         return False
     
 
     laberinto[x][y] = 3 ## Marcar la celda como visitada
 
-    if ((x < len(laberinto)-1 and SolucionBinaria(laberinto,x+1, y)) ## Chequear los distintos casos posibles
-        or (y > 0 and SolucionBinaria(laberinto,x, y-1))
-        or (x > 0 and SolucionBinaria(laberinto,x-1, y))
-        or (y < len(laberinto)-1 and SolucionBinaria(laberinto,x, y+1))):
-        coordsx.append(-x*30+280)
-        coordsy.append(y*30-280)
+    if ((x < len(laberinto)-1 and SolucionBinaria(laberinto,x+1, y)) ## Chequear los distintos casos posibles, comenzando con la celda de abajo
+        or (y > 0 and SolucionBinaria(laberinto,x, y-1)) ## Segundo caso, celda de la izquierda
+        or (x > 0 and SolucionBinaria(laberinto,x-1, y)) ## Tercer caso, celda de arriba
+        or (y < len(laberinto)-1 and SolucionBinaria(laberinto,x, y+1))): ## Cuarto caso, celda de la derecha
+        coordsx.append(-x*30+280) ## Coordenadas de X que cumplen los parametros por lo tanto, soluciones validas
+        coordsy.append(y*30-280) ## Coordenadas de Y que cumplen los parametros por lo tanto, soluciones validas
 
-        return True
-
-    return False
+        return True ## Si se encuentra una celda valida, retorna true 
+      
+    return False ## Celda Invalida, false.
 
          
 
-pantalla.tracer(0)
-dibujarLaberinto(dibujaLaberinto,maze,30)
-SolucionBinaria(maze,0,9)
+pantalla.tracer(0)  ## Acelerar el dibujo.
+dibujarLaberinto(dibujaLaberinto,maze,30) ## Usa funcion caja y en la lista de listas hace uso de los colores blanco y negro para las casillas.
+SolucionBinaria(maze,0,9) ## Por medio de recursión y los distintos casos encuentra la salida.
 
-## Realizar la solución binaria por medio de recursión retornando True o  False en los di
-
+## Revertir las coordenadas dado que estan en el orden de salida, llegada. Por ende se requieren en el orden opuesto.
 coordsx.reverse()
 coordsy.reverse()
-
+## Definir la posición de la tortuga solución en la casilla que tenga 0 en la primera columna del laberinto
 rT.setposition(-30,320)
 rT.color("red")
-rT.begin_fill()
-for a in range(0,len(coordsx)):
+for a in range(0,len(coordsx)): ## Para las coordenadas dentro de solucionX y solucionY, poner la posición de la tortuga siguiendo el camino entrada/salida
     rT.setposition(coordsy[a],coordsx[a])
 
-pantalla.update()
-pantalla.exitonclick()  
+pantalla.update() ## Actualizar pantalla
+pantalla.exitonclick()  ## Al hacer click, cerrar pantalla
