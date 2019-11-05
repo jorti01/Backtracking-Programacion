@@ -6,27 +6,27 @@
 import turtle
 from PIL import Image
 
-BLOCK_SIZE = 19
+BLOQUE = 19 ## Tamaño del bloque para agrupar los pixeles en la imagen, ancho de la imagen / columnas del laberinto, en el ejemplo = 399/21 = 19
 
-im = Image.open('maze.jpg')
-pixels = im.load()
-width, height = im.size
-offset = int(BLOCK_SIZE / 2)
+im = Image.open('maze.jpg') ## Cargar la imagen en la variable im
+pixels = im.load() ## Cargar los pixeles de la imagen contenida en im
+width, height = im.size ## Sacar los valores de ancho y alto de la variable im.
+offset = int(BLOQUE / 2) ## Valor de offset, calculo de la distancia entre el centro y el borde de la imagen.
 
 
-maze = [
+maze = [ ## Se crea la lista de listas, en la cual se tendran los distintos valores que van en el rango de y entre 0, la altura y el tamaño Bloque, en x entre 0, ancho, y tamaño bloque
   [
     int(pixels[x + offset, y + offset][0] < 125)
-    for x in range(0, height, BLOCK_SIZE)
+    for x in range(0, height, BLOQUE)
   ]
-  for y in range(0, width, BLOCK_SIZE)
+  for y in range(0, width, BLOQUE)
 ]
 
 
-maze[20][15] = 2
-maze[19][20] = 1
+maze[20][15] = 2 ## Omitir. Se creó salida para test laberinto-
+maze[19][20] = 1 ## Omitir. Se creó salida para test laberinto.
 
-colores = ["white","black"]
+colores = ["white","black"] ## Los dos colores a usarse, blanco para los 0 y negro para los 1
 
 
 pantalla = turtle.Screen()
