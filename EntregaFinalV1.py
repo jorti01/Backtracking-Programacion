@@ -23,7 +23,7 @@ maze = [ ## Se crea la lista de listas, en la cual se tendran los distintos valo
 ]
 
 
-maze[20][15] = 2 ## Omitir. Se creó salida para test laberinto-
+maze[20][13] = 2 ## Omitir. Se creó salida para test laberinto.
 maze[19][20] = 1 ## Omitir. Se creó salida para test laberinto.
 
 colores = ["white","black"] ## Los dos colores a usarse, blanco para los 0 y negro para los 1
@@ -51,7 +51,8 @@ def caja(tortuga,tamaño):
 ## Se implementa dentro de la función dibujarLaberinto, la función caja, de manera que para los valores de longitud Lista de Laberinto[i] se corra un ciclo for con los valores de la
 ## sublista, por lo tanto va a cambiar de color basado en el 0 o 1 que se encuentre en la posición y asi se dibuja una caja blanca(no obstaculo) o una caja negra
 
-def dibujarLaberinto(tortuga,laberinto,tamaño):
+def dibujarLaberinto(tortuga,laberinto):
+    tamaño = 30
     p = list(laberinto)
     tortuga.setposition(-300,300)
     for i in range(0, len(p)):
@@ -76,6 +77,7 @@ coordsx = [] ## Lista para coordenadas de x, solución
 coordsy = [] ## Lista para coordenadas de y, solución       
 
 def SolucionBinaria(laberinto,x, y):
+    tamaño = 30
     ## Tres posibles casos en terminos binarios.
     if laberinto[x][y] == 2: ## Si se encuentra una celda con el numero 2, esta es la salida. Retornar true.
         print("Solucion encontrada")
@@ -94,8 +96,8 @@ def SolucionBinaria(laberinto,x, y):
         or (y > 0 and SolucionBinaria(laberinto,x, y-1)) ## Segundo caso, celda de la izquierda
         or (x > 0 and SolucionBinaria(laberinto,x-1, y)) ## Tercer caso, celda de arriba
         or (y < len(laberinto)-1 and SolucionBinaria(laberinto,x, y+1))): ## Cuarto caso, celda de la derecha
-        coordsx.append(-x*30+280) ## Coordenadas de X que cumplen los parametros por lo tanto, soluciones validas
-        coordsy.append(y*30-280) ## Coordenadas de Y que cumplen los parametros por lo tanto, soluciones validas
+        coordsx.append(-x*tamaño+280) ## Coordenadas de X que cumplen los parametros por lo tanto, soluciones validas
+        coordsy.append(y*tamaño-280) ## Coordenadas de Y que cumplen los parametros por lo tanto, soluciones validas
 
         return True ## Si se encuentra una celda valida, retorna true 
       
@@ -104,7 +106,7 @@ def SolucionBinaria(laberinto,x, y):
          
 
 pantalla.tracer(0)  ## Acelerar el dibujo.
-dibujarLaberinto(dibujaLaberinto,maze,30) ## Usa funcion caja y en la lista de listas hace uso de los colores blanco y negro para las casillas.
+dibujarLaberinto(dibujaLaberinto,maze) ## Usa funcion caja y en la lista de listas hace uso de los colores blanco y negro para las casillas.
 SolucionBinaria(maze,0,9) ## Por medio de recursión y los distintos casos encuentra la salida.
 
 ## Revertir las coordenadas dado que estan en el orden de salida, llegada. Por ende se requieren en el orden opuesto.
@@ -121,3 +123,4 @@ for a in range(0,len(coordsx)): ## Para las coordenadas dentro de solucionX y so
 
 pantalla.update() ## Actualizar pantalla
 pantalla.exitonclick()  ## Al hacer click, cerrar pantalla
+turtle.bye()
