@@ -9,3 +9,8 @@ Con los valores dentro de las sublistas se utiliza Backtracking y Recursion para
 Se procede a dibujar el laberinto por medio de un ciclo for que permite inspeccionar valor por valor y dependiendo si es un 0 o un 1 se dibuja una caja transparente o negra. Luego para la solución por medio de las coordenadas del paso anterior se usa la funcion setposition de turtle teniendo así de entrada a salida cada celda de la solución dibujada.
 
 
+Ejemplo:
+
+Imagen Base:
+
+![Laberinto sin Solución](https://raw.githubusercontent.com/jorti01/Backtracking-Programacion/master/EntregaFinal/maze.jpg)
