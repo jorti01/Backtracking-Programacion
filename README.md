@@ -14,3 +14,8 @@ Ejemplo:
 Imagen Base:
 
 ![Laberinto sin Solución](https://raw.githubusercontent.com/jorti01/Backtracking-Programacion/master/EntregaFinal/maze.jpg)
+
+Solución (Se editó la celda de salida):
+
+![Laberinto solucionado](https://raw.githubusercontent.com/jorti01/Backtracking-Programacion/master/EntregaFinal/Solucionado.png)
+
